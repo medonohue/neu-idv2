@@ -94,68 +94,7 @@ function dataLoaded(err,rows){
     .key(function(d){return d.group})
     .entries(rows);
     // console.log(groups);
-var funfun = d3.selectAll(".fun");
-    funfun.on('click',function(e){
-    
-    var legendFun = d3.select('.legendFun')
 
-                    .style('width',w+margin.l+margin.r + 'px')
-                    .style('height',h/2 + 100 + 'px')
-                    .style('top',margin.t + 'px');
-
-
-                legendFun
-                    .style('visibility','visible')
-                    .transition()
-                    .style('opacity',1);
-
-    var legendFunBottom = d3.select('.legendFunBottom')
-
-                    .style('width',w+margin.l+margin.r + 'px')
-                    .style('height',h/2 -20 + 'px')
-                    .style('top',margin.t + h/2 + 100 + 35 + 'px');
-
-
-                legendFunBottom
-                    .style('visibility','visible')
-                    .transition()
-                    .style('opacity',.9);
-
-// legendFun.append('line')
-//     .attr('x1',210)
-//     .attr('x2',210)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     ;
-
-// legendFun.append('line')
-//     .attr('x1',450)
-//     .attr('x2',450)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     .style('stroke-dasharray', ('2,2'))
-//     ;
-// legendFun.append('line')
-//     .attr('x1',750)
-//     .attr('x2',750)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     .style('stroke-dasharray', ('6,3'))
-//     ;
-
-                legendFun.select('.fun').html('fun')
-                    .style('left','750px')
-                    .style('top',200+'px');
-                ;
-
-
-});
 
 rows.forEach(function(d) {
 
@@ -382,7 +321,7 @@ newthing.append('circle')
     ;
 
 // LINE FOR FUN/NOTFUN
-newthing.append('line').attr('class','funline')
+newthing.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',d.id * mx)
     .attr('y1',h/2 + 100 - 55)

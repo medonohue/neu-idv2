@@ -28,7 +28,10 @@ h3 {
     background-color: #ffffff;
 
 }
-
+.paddedg {
+    padding: 0 15px;
+    background-color:#cccccc;
+}
 p {
     font-family: 'Courier New', serif;
     font-size:18px;
@@ -37,6 +40,51 @@ p {
 .container{
     position:relative;
 }
+    .legendFun{
+    position: absolute;
+    z-index: 9999;
+    height: 175px;
+    padding-top: 0px;
+    left: 0;
+    margin-left: 15px;
+    bottom: 100%;
+/*    border-radius: 10%;
+    border: 1px solid #999;
+*/    text-align: left;
+    background: #ffffff;
+    color: #000;
+    opacity: 0;
+    margin-bottom: 20px;
+    cursor: default;
+    pointer-events: none;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+}
+    .legendFunBottom{
+    position: absolute;
+    z-index: 9999;
+    height: 175px;
+    padding-top: 0px;
+    left: 0;
+    margin-left: 15px;
+    bottom: 100%;
+/*    border-radius: 10%;
+    border: 1px solid #999;
+*/    text-align: left;
+    background: #ffffff;
+    color: #000;
+    opacity: 0;
+    margin-bottom: 20px;
+    cursor: default;
+    pointer-events: none;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
 .custom-tooltip{
     position: absolute;
     z-index: 9999;

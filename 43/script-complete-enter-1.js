@@ -83,95 +83,68 @@ plot.append('line').attr('class','group')
     .style('stroke-with', '4px')
     ;
 
+d3.queue()
 
-d3.csv('43data2.csv',parse,dataLoaded);
-
-function dataLoaded(err,rows){
+    .defer(d3.csv,'43data2.csv',parse)
+    .await(function (err, data){
     // console.table(rows);
 
   //group rows by circle
   var groups = d3.nest()
     .key(function(d){return d.group})
-    .entries(rows);
-    // console.log(groups);
-var funfun = d3.selectAll(".fun");
-    funfun.on('click',function(e){
-    
-    var legendFun = d3.select('.legendFun')
+    .entries(data);
+    console.log(groups);
 
-                    .style('width',w+margin.l+margin.r + 'px')
-                    .style('height',h/2 + 100 + 'px')
-                    .style('top',margin.t + 'px');
-
-
-                legendFun
-                    .style('visibility','visible')
-                    .transition()
-                    .style('opacity',1);
-
-    var legendFunBottom = d3.select('.legendFunBottom')
-
-                    .style('width',w+margin.l+margin.r + 'px')
-                    .style('height',h/2 -20 + 'px')
-                    .style('top',margin.t + h/2 + 100 + 35 + 'px');
+        //Add buttons
+        d3.select('.btn-group')
+            .selectAll('.btn')
+            .data(groups)
+            .enter()
+            .append('a')
+            .html(function(d){return d.key})
+            .attr('href','#')
+            .attr('class','btn btn-default')
+            .style('color','white')
+            .style('background','grey')
+            .style('border-color','white')
 
 
-                legendFunBottom
-                    .style('visibility','visible')
-                    .transition()
-                    .style('opacity',.9);
+            .on('click',function(d){
+                //Hint: how do we filter flights for particular airlines?
+                //data.filter(...)
+                var dataFiltered = data.filter(function(e){return(d) == e.groups});
+                
+                draw(dataFiltered)
+                
+                //How do we then update the dots?
+            });
 
-// legendFun.append('line')
-//     .attr('x1',210)
-//     .attr('x2',210)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     ;
+        draw(data);
 
-// legendFun.append('line')
-//     .attr('x1',450)
-//     .attr('x2',450)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     .style('stroke-dasharray', ('2,2'))
-//     ;
-// legendFun.append('line')
-//     .attr('x1',750)
-//     .attr('x2',750)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     .style('stroke-dasharray', ('6,3'))
-//     ;
+    });
+;
+function draw(data){
 
-                legendFun.select('.fun').html('fun')
-                    .style('left','750px')
-                    .style('top',200+'px');
-                ;
+data.forEach(function(d) {
 
-
-});
-
-rows.forEach(function(d) {
-
-var newthing = plot.append('g').attr('class','instance');
+var newthing = plot.selectAll('.instance')
+    .data(data);
 
 //Draw the invisible box
-newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
-    .attr("x", d.id * mx -15)
-    .attr("y", h/2 + 100 - 70)
-    .attr("width", 25)
-    .attr("height", 100)
-    .style('fill','none');
+var newthingEnter = newthing.enter()
+    .append('g').attr('class','instance')
+    .merge(newthing)
+
+    // .append("rect").attr('class',function(e) { return "box-" + d.id; })
+    // .attr("x", d.id * mx -15)
+    // .attr("y", h/2 + 100 - 70)
+    // .attr("width", 25)
+    // .attr("height", 100)
+    // .style('fill','none');
 
 
         //Tooltip
-        newthing.on('mouseover',function(e){
+newthing    .on('mouseover',function(d){
                 var tooltip = d3.select('.custom-tooltip');
 
                 tooltip.select('.feeling').html(d.feeling)
@@ -285,7 +258,7 @@ newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
 
 
 // LINE TO LETTER A
-newthing.append('line')
+newthingEnter.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',w/2 - 100)
     .attr('y1',h/2 + 100 - 65)
@@ -351,7 +324,7 @@ newthing.append('line')
 //     ;
 
 // LINE TO LETTER B
-newthing.append('line')
+newthingEnter.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',w/2 + 100)
     .attr('y1',h/2 + 100 - 65)
@@ -374,7 +347,7 @@ newthing.append('line')
 
 
 
-newthing.append('circle')
+newthingEnter.append('circle')
     .attr('cx',d.id * mx)
     .attr('cy',h/2 + 100 - 65)
     .attr('r',4)
@@ -382,7 +355,7 @@ newthing.append('circle')
     ;
 
 // LINE FOR FUN/NOTFUN
-newthing.append('line').attr('class','funline')
+newthingEnter.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',d.id * mx)
     .attr('y1',h/2 + 100 - 55)
@@ -399,7 +372,7 @@ newthing.append('line').attr('class','funline')
     ;
 
 // COLORED RECT
-newthing.append('line')
+newthingEnter.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',d.id * mx)
     .attr('y1',h/2 + 100 - 18)
@@ -412,7 +385,7 @@ newthing.append('line')
 
 
 // BOTTOM LINES
-newthing.append('line')
+newthingEnter.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',d.id * mx)
     .attr('y1',h/2 + 100)
@@ -420,7 +393,7 @@ newthing.append('line')
     .style('stroke','black')
     .style('stroke-width','2px');
 
-newthing.append('line')
+newthingEnter.append('line')
     .attr('x1',d.id * mx + 4)
     .attr('x2',d.id * mx + 4)
     .attr('y1',h/2 + 100)
@@ -438,7 +411,7 @@ newthing.append('line')
         })
     );
 
-newthing.append('text')
+newthingEnter.append('text')
     .attr('x',d.id * mx)
     .attr('y',h/2 + 100 + d.height + 20)
     .text('X')
@@ -448,7 +421,11 @@ newthing.append('text')
         })
     .attr('text-anchor','middle');
 
+    newthing.exit().remove();
+
 });
+
+
 };
 
 

@@ -2,14 +2,17 @@
 <html>
 <head>
     <title></title>
-    <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
 <!--     <link href="../global.css" rel="stylesheet"/>
  -->    <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="container">
-        <h1>Week 43: Trying New Things</h1>
-        <div class="canvas" id="canvas"></div>
+        <h1>This week I tried <a class="newthings">new things</a>.
+        Some <a class="shame">shameful</a>, some <a class="fun">fun</a>, and some <a class="both">both</a>!</h1>
+<!--     <div class="btn-group">
+    </div>
+ -->        <div class="canvas" id="canvas"></div>
     <div class="custom-tooltip">
         <p class="feeling"></p>
         <p class="activity"></p>
@@ -20,12 +23,18 @@
         <p class="finished"></p>
         <p class="group"></p>
     </div>
+    <div class="legendFun">
+        <p class="notfun"></p>
+        <p class="justok"></p>
+        <p class="fun"></p>
+    </div>
+    <div class="legendFunBottom"></div>
 
 
     </div>
 
 
-    <script src="../d3.js"></script>
+    <script src="d3.js"></script>
     <script src="script-complete.js"></script>
 
 </body>

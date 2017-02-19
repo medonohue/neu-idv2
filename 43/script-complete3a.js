@@ -22,32 +22,32 @@ var scaleColor = d3.scaleOrdinal()
 var mx = 30;
 
 // CIRCLE A
-plot.append('circle').attr('class','topcircle')
+plot.append('circle')
     .attr('cx',w/2 - 100)
     .attr('cy',50)
     .attr('r',1)
     .style('fill','black')
-    // .attr('class','innercircle-a')
+    .attr('class','innercircle-a')
     ;
     
-plot.append('circle').attr('class','topcircle')
+plot.append('circle')
     .attr('cx',w/2 - 100)
     .attr('cy',50)
     .attr('r',15)
     .style('stroke','black')
     .style('stroke-width','1px')
     .style('fill','none')
-    // .attr('class','outercircle')
+    .attr('class','outercircle-a')
     ;
 
 // CIRCLE B
-plot.append('circle').attr('class','topcircle')
+plot.append('circle')
     .attr('cx',w/2 + 100)
     .attr('cy',50)
     .attr('r',1)
     .style('fill','black')
     ;
-plot.append('circle').attr('class','topcircle')
+plot.append('circle')
     .attr('cx',w/2 + 100)
     .attr('cy',50)
     .attr('r',15)
@@ -56,7 +56,7 @@ plot.append('circle').attr('class','topcircle')
     .style('fill','none')
     ;
 // LINE GROUP 1
-plot.append('line').attr('class','group')
+plot.append('line').attr('class','lettera')
     .attr('x1',1 * mx)
     .attr('x2',11 * mx)
     .attr('y1',h/2 + 100)
@@ -65,7 +65,7 @@ plot.append('line').attr('class','group')
     .style('stroke-with', '4px')
     ;
 // LINE GROUP 2
-plot.append('line').attr('class','group')
+plot.append('line')
     .attr('x1',12 * mx)
     .attr('x2',18 * mx)
     .attr('y1',h/2 + 100)
@@ -74,7 +74,7 @@ plot.append('line').attr('class','group')
     .style('stroke-with', '4px')
     ;
 // LINE GROUP 3
-plot.append('line').attr('class','group')
+plot.append('line')
     .attr('x1',19 * mx)
     .attr('x2',33 * mx)
     .attr('y1',h/2 + 100)
@@ -94,84 +94,15 @@ function dataLoaded(err,rows){
     .key(function(d){return d.group})
     .entries(rows);
     // console.log(groups);
-var funfun = d3.selectAll(".fun");
-    funfun.on('click',function(e){
-    
-    var legendFun = d3.select('.legendFun')
 
-                    .style('width',w+margin.l+margin.r + 'px')
-                    .style('height',h/2 + 100 + 'px')
-                    .style('top',margin.t + 'px');
-
-
-                legendFun
-                    .style('visibility','visible')
-                    .transition()
-                    .style('opacity',1);
-
-    var legendFunBottom = d3.select('.legendFunBottom')
-
-                    .style('width',w+margin.l+margin.r + 'px')
-                    .style('height',h/2 -20 + 'px')
-                    .style('top',margin.t + h/2 + 100 + 35 + 'px');
-
-
-                legendFunBottom
-                    .style('visibility','visible')
-                    .transition()
-                    .style('opacity',.9);
-
-// legendFun.append('line')
-//     .attr('x1',210)
-//     .attr('x2',210)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     ;
-
-// legendFun.append('line')
-//     .attr('x1',450)
-//     .attr('x2',450)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     .style('stroke-dasharray', ('2,2'))
-//     ;
-// legendFun.append('line')
-//     .attr('x1',750)
-//     .attr('x2',750)
-//     .attr('y1',295)
-//     .attr('y2',330)
-//     .style('stroke','black')
-//     .style('stroke-width','2px')
-//     .style('stroke-dasharray', ('6,3'))
-//     ;
-
-                legendFun.select('.fun').html('fun')
-                    .style('left','750px')
-                    .style('top',200+'px');
-                ;
-
-
-});
 
 rows.forEach(function(d) {
 
 var newthing = plot.append('g').attr('class','instance');
 
-//Draw the invisible box
-newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
-    .attr("x", d.id * mx -15)
-    .attr("y", h/2 + 100 - 70)
-    .attr("width", 25)
-    .attr("height", 100)
-    .style('fill','none');
-
 
         //Tooltip
-        newthing.on('mouseover',function(e){
+        newthing.on('mouseenter',function(e){
                 var tooltip = d3.select('.custom-tooltip');
 
                 tooltip.select('.feeling').html(d.feeling)
@@ -209,6 +140,32 @@ newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
                     .style('top',310 +'px');
                 ;
 
+tooltip.select('innercircle-a')
+    .attr('cx',w/2 - 100)
+    .attr('cy',50)
+    .attr('r',(
+        function(e) { 
+            if(d.lettera == 'a') return "1"
+            else if (d.lettera == '') return "0"
+        })
+    )
+    .style('fill','black')
+    ;
+    
+tooltip.select('outercircle-a')
+    .attr('cx',w/2 - 100)
+    .attr('cy',50)
+    .attr('r',40)
+    .style('stroke','black')
+    .style('stroke-width',1)
+    .style('fill',(
+        function(e) { 
+            if(d.lettera == 'a') return "orange"
+            else if (d.lettera == '') return "blue"
+        })
+    )
+    ;
+
                 tooltip.select('.letterb').html(
                     function(e) {            // <== Add these
                     if (d.letterb == 'b') {return "someone noticed"}
@@ -235,25 +192,7 @@ newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
                    else{
                      return .1;
                    }
-                 })
-                 
-                 d3.selectAll('.topcircle')
-                 .style('opacity',.1)
-
-                 d3.selectAll('.group')
-                 .style('opacity',.1)
-
-                // var otherstuff = d3.selectAll('.outercircle')
-                //  .style('opacity',function(d){
-                //    if (d.lettera == 'a'){
-                //      return 0;
-                //    }
-                //    else{
-                //      return 1;
-                //    }
-                //  })
-
-                 ;
+                 });
             // d3.select(this).transition().style('opacity',1);
 
             //     var self = this;
@@ -263,10 +202,12 @@ newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
             // others.filter(function (x) { return self != this; })
             //     .transition().style('opacity',.3);
 
-            })
-            .on('mousemove',function(e){
+            }).on('mousemove',function(e){
 
-
+                // var tooltip = d3.select('.custom-tooltip')
+                //     // .style('left',d.id * mx+'px')
+                //     // .style('top',110+'px')
+                //     ;
 
             }).on('mouseleave',function(d){
                 var tooltip = d3.select('.custom-tooltip');
@@ -275,11 +216,7 @@ newthing.append("rect").attr('class',function(e) { return "box-" + d.id; })
                     .style('visibility','hidden')
                     .style('opacity',0);
 
-                d3.selectAll('.instance').transition().style('opacity',1);
-                d3.selectAll('.group').style('opacity',1)
-                d3.selectAll('.topcircle').style('opacity',1)
-
-                // d3.selectAll(".outercircle").transition().style('opacity',1);
+                d3.selectAll("g").transition().style('opacity',1);
             });
 
 
@@ -304,7 +241,7 @@ newthing.append('line')
     )
     ;
 
-// // CIRCLE A
+// CIRCLE A
 // newthing.append('circle')
 //     .attr('cx',w/2 - 100)
 //     .attr('cy',50)
@@ -315,7 +252,6 @@ newthing.append('line')
 //         })
 //     )
 //     .style('fill','black')
-//     .attr('class','innercircle')
 //     ;
     
 // newthing.append('circle')
@@ -330,9 +266,7 @@ newthing.append('line')
 //         })
 //     )
 //     .style('fill','none')
-//     .attr('class','outercircle')
 //     ;
-
 
 // // CIRCLE B
 // plot.append('circle')
@@ -372,8 +306,7 @@ newthing.append('line')
 
 
 
-
-
+// CIRCLE
 newthing.append('circle')
     .attr('cx',d.id * mx)
     .attr('cy',h/2 + 100 - 65)
@@ -382,7 +315,7 @@ newthing.append('circle')
     ;
 
 // LINE FOR FUN/NOTFUN
-newthing.append('line').attr('class','funline')
+newthing.append('line')
     .attr('x1',d.id * mx)
     .attr('x2',d.id * mx)
     .attr('y1',h/2 + 100 - 55)
